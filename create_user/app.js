@@ -11,8 +11,8 @@ exports.lambdaHandler = async (event, context) => {
         userid += "-" + crypto.randomBytes(16).toString('hex');
 
         var body = {
-            'userid': userid,
-            'message': 'created'
+            'UserId': userid,
+            'Message': 'created user',
         }
 
         response = {
@@ -20,7 +20,7 @@ exports.lambdaHandler = async (event, context) => {
             'body': JSON.stringify(body)
         }
 
-        console.log('created user with userid:' + userid)
+        console.log('created user with UserId:' + userid)
     } catch (err) {
         console.log(err);
         return err;

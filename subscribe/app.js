@@ -5,33 +5,29 @@ const crypto = require('crypto');
 const AWS = require("aws-sdk");
 
 const docClient = new AWS.DynamoDB.DocumentClient();
-const table = "call_events";
+const table = "call_subscriptions";
 
 exports.lambdaHandler = async (event, context) => {
     console.log('event', event);
 
     var body = {
-        'Message': 'created user',
+        'Message': 'subscribed to event',
     }
     var statusCode = 200;
 
     try {
         var data = JSON.parse(event.body);
-        if (data == undefined || !('Title' in data) || !('UserId' in data)) {
-            throw new Error('Required field UserId or Title is missing');
+        if (data == undefined || !('EventId' in data) || !('UserId' in data)) {
+            throw new Error('Required field UserId or EventId is missing');
         }
 
         try {
-            const eventid = uuidv4();
+            const subscriptionid = uuidv4();
             var item = {
-                "EventId": eventid,
-                "Title": data.Title,
-                "UserId": data.UserId
+                "SubscriptionId": subscriptionid,
+                "UserId": data.UserId,
+                "EventId": data.EventId
             };
-
-            if ('Description' in data) {
-                item.Description = data.Description;
-            }
 
             var params = {
                 TableName: table,
@@ -39,7 +35,7 @@ exports.lambdaHandler = async (event, context) => {
             };
 
             await docClient.put(params).promise();
-            body.Event = item
+            body.Subscription = item
         } catch (err) {
             console.log(err);
             statusCode = 500;

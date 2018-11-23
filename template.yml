@@ -74,7 +74,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Timeout: 60
-      CodeUri: list_events//
+      CodeUri: list_events/
       Handler: app.lambdaHandler
       Runtime: nodejs8.10
       Environment:
@@ -84,9 +84,41 @@ Resources:
         Fn::ImportValue:
           !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
       Events:
-        PostRequest:
+        GetRequest:
           Type: Api
           Properties:
             RestApiId: !Ref RestApi
             Path: /list-events
             Method: get
+        PostRequest:
+          Type: Api
+          Properties:
+            RestApiId: !Ref RestApi
+            Path: /list-events
+            Method: post
+  Subscribe:
+    Type: AWS::Serverless::Function
+    Properties:
+      Timeout: 60
+      CodeUri: subscribe/
+      Handler: app.lambdaHandler
+      Runtime: nodejs8.10
+      Environment:
+        Variables:
+          NODE_ENV: production
+      Role:
+        Fn::ImportValue:
+          !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+      Events:
+        GetRequest:
+          Type: Api
+          Properties:
+            RestApiId: !Ref RestApi
+            Path: /subscribe
+            Method: get
+        PostRequest:
+          Type: Api
+          Properties:
+            RestApiId: !Ref RestApi
+            Path: /subscribe
+            Method: post
