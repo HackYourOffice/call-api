@@ -182,17 +182,28 @@ Change title or nfctagid of an event (save in DB)
 ### used IDs:   
 none
 
-### /list-event  
-GET - Request  
+### /list-events
+GET - Request 
 
 ### action
 List all events saved in DB - title / userid  
 
+### params
+
+- `userid` – filter events by userid
+
 ### Response  
-{  
-  [  
-  eventid : "1231231233",  
-    title : "Mittagessen"  
-    [userid]    
-    ]  
-}  
+```
+{ 
+    "Events": [
+        {
+            "EventId" : "01d06f62-edd6-4c0e-933b-477cdec96aae",  
+            "Title" : "Mittagessen"  
+        },
+        {
+            "EventId" : "b5314183-25ae-46ee-954d-426f4cf8c7bd",  
+            "Title" : "Frühstück"  
+        }
+    ]
+}
+```

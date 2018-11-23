@@ -36,12 +36,6 @@ Resources:
         Fn::ImportValue:
           !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
       Events:
-        CreateRequest:
-          Type: Api
-          Properties:
-            RestApiId: !Ref RestApi
-            Path: /create-user
-            Method: create
         PostRequest:
           Type: Api
           Properties:
@@ -69,15 +63,30 @@ Resources:
         Fn::ImportValue:
           !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
       Events:
-        CreateRequest:
-          Type: Api
-          Properties:
-            RestApiId: !Ref RestApi
-            Path: /create-event
-            Method: create
         PostRequest:
           Type: Api
           Properties:
             RestApiId: !Ref RestApi
             Path: /create-event
             Method: post
+
+  ListEvents:
+    Type: AWS::Serverless::Function
+    Properties:
+      Timeout: 60
+      CodeUri: list_events//
+      Handler: app.lambdaHandler
+      Runtime: nodejs8.10
+      Environment:
+        Variables:
+          NODE_ENV: production
+      Role:
+        Fn::ImportValue:
+          !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+      Events:
+        PostRequest:
+          Type: Api
+          Properties:
+            RestApiId: !Ref RestApi
+            Path: /list-events
+            Method: get

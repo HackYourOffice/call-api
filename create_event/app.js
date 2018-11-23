@@ -28,7 +28,7 @@ exports.lambdaHandler = async (event, context) => {
             var item = {
                 "title": data.title,
                 "userid": data.userid,
-                    "eventid": eventid
+                "eventid": eventid
             };
 
             if ('description' in data) {
