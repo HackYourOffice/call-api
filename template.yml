@@ -122,3 +122,55 @@ Resources:
             RestApiId: !Ref RestApi
             Path: /subscribe
             Method: post
+  Notify:
+    Type: AWS::Serverless::Function
+    Properties:
+      Timeout: 60
+      CodeUri: notify/
+      Handler: app.lambdaHandler
+      Runtime: nodejs8.10
+      Environment:
+        Variables:
+          NODE_ENV: production
+      Role:
+        Fn::ImportValue:
+          !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+      Events:
+        GetRequest:
+          Type: Api
+          Properties:
+            RestApiId: !Ref RestApi
+            Path: /notify
+            Method: get
+        PostRequest:
+          Type: Api
+          Properties:
+            RestApiId: !Ref RestApi
+            Path: /notify
+            Method: post
+  Poll:
+    Type: AWS::Serverless::Function
+    Properties:
+      Timeout: 60
+      CodeUri: poll/
+      Handler: app.lambdaHandler
+      Runtime: nodejs8.10
+      Environment:
+        Variables:
+          NODE_ENV: production
+      Role:
+        Fn::ImportValue:
+          !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+      Events:
+        GetRequest:
+          Type: Api
+          Properties:
+            RestApiId: !Ref RestApi
+            Path: /poll
+            Method: get
+        PostRequest:
+          Type: Api
+          Properties:
+            RestApiId: !Ref RestApi
+            Path: /poll
+            Method: post

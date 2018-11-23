@@ -20,7 +20,6 @@ exports.lambdaHandler = async (event, context) => {
     try {
         var data = JSON.parse(event.body);
         if (data != undefined && 'UserId' in data) {
-            params.filter = data.UserId;
             params.FilterExpression = "#UserId = :UserId";
             params.ExpressionAttributeNames = {
                 "#UserId": "UserId"
