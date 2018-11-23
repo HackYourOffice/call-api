@@ -1,0 +1,16 @@
+{
+  "name": "create_user",
+  "version": "1.0.0",
+  "description": "Create a new user",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha tests/unit/"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.1.1"
+  },
+  "dependencies": {
+    "uuid": "^3.3.2"
+  }
+}

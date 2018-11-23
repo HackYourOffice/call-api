@@ -22,10 +22,12 @@ Resources:
       Variables:
         Stage: !Ref Stage
 
-  HelloWorld:
+  CreateUser:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: index.handler
+      Timeout: 60
+      CodeUri: create_user/
+      Handler: app.lambdaHandler
       Runtime: nodejs8.10
       Environment:
         Variables:
@@ -34,15 +36,48 @@ Resources:
         Fn::ImportValue:
           !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
       Events:
-        GetEvent:
+        CreateRequest:
           Type: Api
           Properties:
             RestApiId: !Ref RestApi
-            Path: /
+            Path: /create-user
+            Method: create
+        PostRequest:
+          Type: Api
+          Properties:
+            RestApiId: !Ref RestApi
+            Path: /create-user
+            Method: post
+        GetRequest:
+          Type: Api
+          Properties:
+            RestApiId: !Ref RestApi
+            Path: /create-user
             Method: get
-        PostEvent:
+
+  CreateEvent:
+    Type: AWS::Serverless::Function
+    Properties:
+      Timeout: 60
+      CodeUri: create_event/
+      Handler: app.lambdaHandler
+      Runtime: nodejs8.10
+      Environment:
+        Variables:
+          NODE_ENV: production
+      Role:
+        Fn::ImportValue:
+          !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+      Events:
+        CreateRequest:
           Type: Api
           Properties:
             RestApiId: !Ref RestApi
-            Path: /
+            Path: /create-event
+            Method: create
+        PostRequest:
+          Type: Api
+          Properties:
+            RestApiId: !Ref RestApi
+            Path: /create-event
             Method: post
