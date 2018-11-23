@@ -174,3 +174,55 @@ Resources:
             RestApiId: !Ref RestApi
             Path: /poll
             Method: post
+  RegisterNfc:
+    Type: AWS::Serverless::Function
+    Properties:
+      Timeout: 60
+      CodeUri: register_nfc/
+      Handler: app.lambdaHandler
+      Runtime: nodejs8.10
+      Environment:
+        Variables:
+          NODE_ENV: production
+      Role:
+        Fn::ImportValue:
+          !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+      Events:
+        GetRequest:
+          Type: Api
+          Properties:
+            RestApiId: !Ref RestApi
+            Path: /register-nfc
+            Method: get
+        PostRequest:
+          Type: Api
+          Properties:
+            RestApiId: !Ref RestApi
+            Path: /register-nfc
+            Method: post
+  GetEventByNfc:
+    Type: AWS::Serverless::Function
+    Properties:
+      Timeout: 60
+      CodeUri: get_event_by_nfc/
+      Handler: app.lambdaHandler
+      Runtime: nodejs8.10
+      Environment:
+        Variables:
+          NODE_ENV: production
+      Role:
+        Fn::ImportValue:
+          !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+      Events:
+        GetRequest:
+          Type: Api
+          Properties:
+            RestApiId: !Ref RestApi
+            Path: /get-event-by-nfc
+            Method: get
+        PostRequest:
+          Type: Api
+          Properties:
+            RestApiId: !Ref RestApi
+            Path: /get-event-by-nfc
+            Method: post

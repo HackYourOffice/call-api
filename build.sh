@@ -24,6 +24,12 @@ function  package {
     >&2 echo "[INFO] packaging node projects"
     bash -c 'cd create_user/ && npm install'
     bash -c 'cd create_event/ && npm install'
+    bash -c 'cd list_events/ && npm install'
+    bash -c 'cd poll/ && npm install'
+    bash -c 'cd notify/ && npm install'
+    bash -c 'cd subscribe/ && npm install'
+    bash -c 'cd register_nfc/ && npm install'
+    bash -c 'cd get_event_by_nfc/ && npm install'
 
     >&2 echo "[INFO] uploading artifacts"
     sam package --template-file template.yml \
