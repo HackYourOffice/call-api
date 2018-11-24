@@ -226,3 +226,55 @@ Resources:
             RestApiId: !Ref RestApi
             Path: /get-event-by-nfc
             Method: post
+  Count:
+    Type: AWS::Serverless::Function
+    Properties:
+      Timeout: 60
+      CodeUri: count/
+      Handler: app.lambdaHandler
+      Runtime: nodejs8.10
+      Environment:
+        Variables:
+          NODE_ENV: production
+      Role:
+        Fn::ImportValue:
+          !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+      Events:
+        GetRequest:
+          Type: Api
+          Properties:
+            RestApiId: !Ref RestApi
+            Path: /count
+            Method: get
+        PostRequest:
+          Type: Api
+          Properties:
+            RestApiId: !Ref RestApi
+            Path: /count
+            Method: post
+  AcceptEvent:
+    Type: AWS::Serverless::Function
+    Properties:
+      Timeout: 60
+      CodeUri: accept_event/
+      Handler: app.lambdaHandler
+      Runtime: nodejs8.10
+      Environment:
+        Variables:
+          NODE_ENV: production
+      Role:
+        Fn::ImportValue:
+          !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+      Events:
+        GetRequest:
+          Type: Api
+          Properties:
+            RestApiId: !Ref RestApi
+            Path: /accept-event
+            Method: get
+        PostRequest:
+          Type: Api
+          Properties:
+            RestApiId: !Ref RestApi
+            Path: /accept-event
+            Method: post

@@ -1,0 +1,8 @@
+{
+  "name": "create_event",
+  "version": "1.0.0",
+  "description": "Create a new event",
+  "main": "app.js",
+  "devDependencies": {},
+  "dependencies": {}
+}

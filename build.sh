@@ -30,6 +30,7 @@ function  package {
     bash -c 'cd subscribe/ && npm install'
     bash -c 'cd register_nfc/ && npm install'
     bash -c 'cd get_event_by_nfc/ && npm install'
+    bash -c 'cd count/ && npm install'
 
     >&2 echo "[INFO] uploading artifacts"
     sam package --template-file template.yml \
